@@ -1,0 +1,20 @@
+name: example
+description: An example Flutter application that uses the keyboard_attachable package.
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  keyboard_attachable:
+    path: ../
+  cupertino_icons: ^0.1.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
