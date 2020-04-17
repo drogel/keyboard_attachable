@@ -6,4 +6,6 @@ abstract class KeyboardAttachableController {
   TickerFuture forward();
 
   TickerFuture reverse();
+
+  void dispose();
 }

@@ -28,4 +28,10 @@ class CupertinoAttachableController implements KeyboardAttachableController {
     final reverseSimulation = SpringSimulation(_spring, 1, 0, -_springVelocity);
     return _controller.animateWith(reverseSimulation);
   }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _controller = null;
+  }
 }
