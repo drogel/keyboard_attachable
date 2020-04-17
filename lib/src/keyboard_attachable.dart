@@ -17,24 +17,24 @@ class KeyboardAttachable extends StatefulWidget {
 
 class _KeyboardAttachableState extends State<KeyboardAttachable>
     with SingleTickerProviderStateMixin {
-  AnimationController _bottomSizeController;
+  AnimationController _controller;
   double _bottomSize;
 
   @override
   void initState() {
     _bottomSize = 0;
-    _bottomSizeController = AnimationController(vsync: this);
+    _controller = AnimationController(vsync: this);
     final spring = SpringDescription(mass: 8, stiffness: 1, damping: 4.5);
     final fwSimulation = SpringSimulation(spring, 0, 1, 10);
     final revSimulation = SpringSimulation(spring, 1, 0, -10);
     KeyboardVisibilityNotification().addNewListener(
       onShow: () {
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          _bottomSizeController.animateWith(fwSimulation);
+          _controller.animateWith(fwSimulation);
         });
       },
       onHide: () {
-        _bottomSizeController.animateWith(revSimulation);
+        _controller.animateWith(revSimulation);
       }
     );
     super.initState();
@@ -48,7 +48,7 @@ class _KeyboardAttachableState extends State<KeyboardAttachable>
       children: <Widget>[
         widget.child,
         SizeTransition(
-          sizeFactor: _bottomSizeController,
+          sizeFactor: _controller,
           child: SizedBox(height: _bottomSize),
         ),
       ],
