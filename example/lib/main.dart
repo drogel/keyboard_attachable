@@ -10,9 +10,26 @@ class Example extends StatelessWidget {
           resizeToAvoidBottomInset: false,
           appBar: AppBar(),
           body: FooterLayout(
-            body: TextField(),
+            body: ListView.builder(
+              itemCount: Colors.primaries.length,
+              itemBuilder: (_, i) => Container(
+                height: 88,
+                color: Colors.primaries[i].withOpacity(0.33),
+              ),
+            ),
             footer: KeyboardAttachable(
-              child: Text("Testing a label"),
+              child: Container(
+                padding: const EdgeInsets.all(16),
+                color: Colors.blue,
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: "Tap me!",
+                    fillColor: Colors.white,
+                    filled: true,
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+              ),
             ),
           ),
         ),

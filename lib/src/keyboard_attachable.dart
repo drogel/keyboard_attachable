@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:keyboard_attachable/src/cupertino_attachable_controller.dart';
+import 'package:keyboard_attachable/src/android_attachable_controller.dart';
+import 'package:keyboard_attachable/src/ios_attachable_controller.dart';
 import 'package:keyboard_attachable/src/keyboard_attachable_controller.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
 
@@ -23,7 +24,7 @@ class _KeyboardAttachableState extends State<KeyboardAttachable>
   @override
   void initState() {
     _bottomSize = 0;
-    _controller = CupertinoAttachableController(vsync: this);
+    _controller = AndroidAttachableController(vsync: this);
     KeyboardVisibilityNotification().addNewListener(
       onShow: () => WidgetsBinding.instance.addPostFrameCallback(
         (_) => _controller.forward(),

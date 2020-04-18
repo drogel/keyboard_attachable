@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/physics.dart';
 import 'package:keyboard_attachable/src/keyboard_attachable_controller.dart';
 
-class CupertinoAttachableController implements KeyboardAttachableController {
-  CupertinoAttachableController({@required TickerProvider vsync})
+class IOSAttachableController implements KeyboardAttachableController {
+  IOSAttachableController({@required TickerProvider vsync})
       : _spring = SpringDescription(mass: 8, stiffness: 1, damping: 4.5),
         _springVelocity = 10 {
     _controller = AnimationController(vsync: vsync);
