@@ -3,23 +3,30 @@ import 'package:keyboard_attachable/src/controller/keyboard_attachable_controlle
 import 'package:keyboard_attachable/src/controller/keyboard_attachable_injector.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
 
-/// A widget that smoothly adds space below its child when the keyboard appears.
+/// A widget that adds space below its baseline when the soft keyboard is shown
+/// and hidden with an animation that matches that of the platform keyboard.
 ///
 /// This widget can be used to animate its child when the soft keyboard is shown
 /// or hidden, so that the child widget appears to be attached to the keyboard.
+///
+/// If no child widget is passed to the [KeyboardAttachable], it can still be
+/// used to animate the shrinkage and expansion of the layout when the keyboard
+/// is shown an hidden, respectively.
 class KeyboardAttachable extends StatefulWidget {
   /// Creates a widget that smoothly adds space below its child when the
   /// keyboard is shown or hidden.
-  ///
-  /// Its child widget cannot be null.
   const KeyboardAttachable({
-    @required this.child,
+    this.child,
     this.backgroundColor = Colors.transparent,
     Key key,
-  })  : assert(child != null),
-        super(key: key);
+  }) : super(key: key);
 
+  /// The color that fills the space that is added when the keyboard appears.
+  ///
+  /// By default, this value is [Colors.transparent].
   final Color backgroundColor;
+
+  /// The widget to be placed above the space that this widget can insert.
   final Widget child;
 
   @override
@@ -48,7 +55,7 @@ class _KeyboardAttachableState extends State<KeyboardAttachable>
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        widget.child,
+        if (widget.child != null) widget.child,
         SizeTransition(
           sizeFactor: _controller.animation,
           child: Container(
