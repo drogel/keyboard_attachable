@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:keyboard_attachable/src/android_attachable_controller.dart';
-import 'package:keyboard_attachable/src/keyboard_attachable_controller.dart';
+import 'package:keyboard_attachable/src/controller/keyboard_attachable_controller.dart';
+import 'package:keyboard_attachable/src/controller/keyboard_attachable_injector.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
 
 class KeyboardAttachable extends StatefulWidget {
@@ -25,7 +25,7 @@ class _KeyboardAttachableState extends State<KeyboardAttachable>
   @override
   void initState() {
     _bottomSize = 0;
-    _controller = AndroidAttachableController(vsync: this);
+    _controller = KeyboardAttachableInjector(this).getPlatformController();
     KeyboardVisibilityNotification().addNewListener(
       onShow: () => _controller.forward(),
       onHide: () => _controller.reverse(),

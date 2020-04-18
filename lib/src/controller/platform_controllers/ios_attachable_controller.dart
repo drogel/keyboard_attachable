@@ -1,7 +1,7 @@
 import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/physics.dart';
-import 'package:keyboard_attachable/src/keyboard_attachable_controller.dart';
+import 'package:keyboard_attachable/src/controller/keyboard_attachable_controller.dart';
 
 class IOSAttachableController implements KeyboardAttachableController {
   IOSAttachableController({@required TickerProvider vsync})

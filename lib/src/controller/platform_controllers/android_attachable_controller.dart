@@ -1,7 +1,6 @@
-import 'package:flutter/animation.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:keyboard_attachable/src/keyboard_attachable_controller.dart';
+import 'package:flutter/widgets.dart';
+import 'package:keyboard_attachable/src/controller/keyboard_attachable_controller.dart';
 
 class AndroidAttachableController implements KeyboardAttachableController {
   AndroidAttachableController({@required TickerProvider vsync}) {
