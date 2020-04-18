@@ -8,11 +8,30 @@ class Example extends StatelessWidget {
   Widget build(BuildContext context) => MaterialApp(
         home: Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: AppBar(),
+          appBar: AppBar(title: const Text("Keyboard Attachable demo")),
           body: FooterLayout(
-            body: TextField(),
+            body: ListView.builder(
+              shrinkWrap: true,
+              itemCount: Colors.primaries.length,
+              itemBuilder: (_, i) => Container(
+                height: 88,
+                color: Colors.primaries[i].withOpacity(0.2),
+              ),
+            ),
             footer: KeyboardAttachable(
-              child: Text("Testing a label"),
+              backgroundColor: Colors.blueAccent[700],
+              child: Container(
+                padding: const EdgeInsets.all(16),
+                color: Colors.blueAccent[700],
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: "Tap me!",
+                    fillColor: Colors.white,
+                    filled: true,
+                    border: const OutlineInputBorder(),
+                  ),
+                ),
+              ),
             ),
           ),
         ),

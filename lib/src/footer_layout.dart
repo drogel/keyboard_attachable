@@ -14,7 +14,7 @@ class FooterLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => CustomMultiChildLayout(
-        delegate: _SectionLayoutDelegate(),
+        delegate: _FooterLayoutDelegate(),
         children: <Widget>[
           if (body != null) LayoutId(id: _Entries.body, child: body),
           if (footer != null) LayoutId(id: _Entries.footer, child: footer)
@@ -22,9 +22,7 @@ class FooterLayout extends StatelessWidget {
       );
 }
 
-class _SectionLayoutDelegate extends MultiChildLayoutDelegate {
-  _SectionLayoutDelegate();
-
+class _FooterLayoutDelegate extends MultiChildLayoutDelegate {
   @override
   void performLayout(Size size) {
     var bodySize = Size.zero;
