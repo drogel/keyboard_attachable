@@ -10,7 +10,7 @@ class Example extends StatelessWidget {
           resizeToAvoidBottomInset: false,
           appBar: AppBar(title: const Text("Keyboard Attachable demo")),
           body: FooterLayout(
-            body: ListView.builder(
+            child: ListView.builder(
               shrinkWrap: true,
               itemCount: Colors.primaries.length,
               itemBuilder: (_, i) => Container(

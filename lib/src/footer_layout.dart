@@ -1,47 +1,52 @@
 import 'package:flutter/widgets.dart';
 
-enum _Entries { body, footer }
-
+/// A widget that can lay out a child widget above a footer.
+///
+/// This widget builds a [CustomMultiChildLayout] whose delegate loosely
+/// positions a footer widget at the bottom of the available space first,
+/// and then positions its child widget in the remaining space with loose
+/// constraints.
 class FooterLayout extends StatelessWidget {
+  /// Creates a layout with its child widget above a footer widget.
   const FooterLayout({
     Key key,
-    this.body,
     this.footer,
+    this.child,
   }) : super(key: key);
 
-  final Widget body;
+  /// The widget to position at the bottom of the available space.
   final Widget footer;
+
+  /// The primary content of the [FooterLayout].
+  final Widget child;
 
   @override
   Widget build(BuildContext context) => CustomMultiChildLayout(
         delegate: _FooterLayoutDelegate(),
         children: <Widget>[
-          if (body != null) LayoutId(id: _Entries.body, child: body),
+          if (child != null) LayoutId(id: _Entries.body, child: child),
           if (footer != null) LayoutId(id: _Entries.footer, child: footer)
         ],
       );
 }
 
+enum _Entries { body, footer }
+
 class _FooterLayoutDelegate extends MultiChildLayoutDelegate {
   @override
   void performLayout(Size size) {
-    var bodySize = Size.zero;
     var footerSize = Size.zero;
-
-    var bodyOffset = Offset.zero;
-    var footerOffset = Offset.zero;
 
     if (hasChild(_Entries.footer)) {
       footerSize = layoutChild(_Entries.footer, BoxConstraints.loose(size));
-      footerOffset = Offset(0, size.height - footerSize.height);
+      final footerOffset = Offset(0, size.height - footerSize.height);
       positionChild(_Entries.footer, footerOffset);
     }
 
     if (hasChild(_Entries.body)) {
-      bodySize = Size(size.width, size.height - footerSize.height);
-      bodyOffset = Offset.zero;
+      final bodySize = Size(size.width, size.height - footerSize.height);
       layoutChild(_Entries.body, BoxConstraints.loose(bodySize));
-      positionChild(_Entries.body, bodyOffset);
+      positionChild(_Entries.body, Offset.zero);
     }
   }
 
