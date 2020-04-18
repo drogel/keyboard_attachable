@@ -8,7 +8,7 @@ class Example extends StatelessWidget {
   Widget build(BuildContext context) => MaterialApp(
         home: Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: AppBar(title: Text("Keyboard Attachable demo")),
+          appBar: AppBar(title: const Text("Keyboard Attachable demo")),
           body: FooterLayout(
             body: ListView.builder(
               shrinkWrap: true,
@@ -28,7 +28,7 @@ class Example extends StatelessWidget {
                     hintText: "Tap me!",
                     fillColor: Colors.white,
                     filled: true,
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                   ),
                 ),
               ),

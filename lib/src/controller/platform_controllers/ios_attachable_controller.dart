@@ -5,7 +5,7 @@ import 'package:keyboard_attachable/src/controller/keyboard_attachable_controlle
 
 class IOSAttachableController implements KeyboardAttachableController {
   IOSAttachableController({@required TickerProvider vsync})
-      : _spring = SpringDescription(mass: 8, stiffness: 1, damping: 4.5),
+      : _spring = const SpringDescription(mass: 8, stiffness: 1, damping: 4.5),
         _springVelocity = 10 {
     _controller = AnimationController(vsync: vsync);
   }

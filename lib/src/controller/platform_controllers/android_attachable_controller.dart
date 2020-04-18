@@ -16,8 +16,8 @@ class AndroidAttachableController implements KeyboardAttachableController {
   @override
   Animation<double> get animation => CurvedAnimation(
         parent: _controller,
-        curve: Cubic(0, 0, 0.2, 1),
-        reverseCurve: Cubic(0, 0, 1, 0.2),
+        curve: const Cubic(0, 0, 0.2, 1),
+        reverseCurve: const Cubic(0, 0, 1, 0.2),
       );
 
   @override
