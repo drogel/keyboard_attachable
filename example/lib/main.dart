@@ -10,14 +10,6 @@ class Example extends StatelessWidget {
           resizeToAvoidBottomInset: false,
           appBar: AppBar(title: const Text("Keyboard Attachable demo")),
           body: FooterLayout(
-            body: ListView.builder(
-              shrinkWrap: true,
-              itemCount: Colors.primaries.length,
-              itemBuilder: (_, i) => Container(
-                height: 88,
-                color: Colors.primaries[i].withOpacity(0.2),
-              ),
-            ),
             footer: KeyboardAttachable(
               backgroundColor: Colors.blueAccent[700],
               child: Container(
@@ -31,6 +23,14 @@ class Example extends StatelessWidget {
                     border: const OutlineInputBorder(),
                   ),
                 ),
+              ),
+            ),
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: Colors.primaries.length,
+              itemBuilder: (_, i) => Container(
+                height: 88,
+                color: Colors.primaries[i].withOpacity(0.2),
               ),
             ),
           ),
