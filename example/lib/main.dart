@@ -30,10 +30,10 @@ class KeyboardAttachablePage extends StatelessWidget {
 class KeyboardAttachableFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) => KeyboardAttachable(
-        backgroundColor: Colors.blueAccent[700],
+        backgroundColor: Colors.blue,
         child: Container(
           padding: const EdgeInsets.all(16),
-          color: Colors.blueAccent[700],
+          color: Colors.blue,
           child: TextField(
             decoration: InputDecoration(
               hintText: "Tap me!",
@@ -50,9 +50,9 @@ class KeyboardAttachableFooter extends StatelessWidget {
 class ColorsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ListView.builder(
+        itemExtent: 66,
         itemCount: Colors.primaries.length,
         itemBuilder: (_, i) => Container(
-          height: 88,
           color: Colors.primaries[i].withOpacity(0.2),
         ),
       );

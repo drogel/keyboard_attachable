@@ -8,6 +8,9 @@ A Flutter package to build widgets that can be attached to the soft keyboard.
 
 ## Features
 
+* An alternative to Scaffold's `resizeToAvoidBottomInset`, with animations.
+* Animate the shrinkage and expansion of the page when the soft keyboard is shown and hidden, matching the platform soft keyboard animation.
+* Easily add permanent page footers that can be attached to the top of the soft keyboard.
 
 ## Usage
 
