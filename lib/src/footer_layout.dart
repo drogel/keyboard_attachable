@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 ///
 /// This widget builds a [CustomMultiChildLayout] whose delegate loosely
 /// positions a footer widget at the bottom of the available space first,
-/// and then positions its child widget in the remaining space with loose
+/// and then positions a child widget in the remaining space with loose
 /// constraints.
 class FooterLayout extends StatelessWidget {
   /// Creates a layout with its child widget above a footer widget.

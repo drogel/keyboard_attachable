@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:keyboard_attachable/keyboard_attachable.dart';
 import 'package:keyboard_attachable/src/controller/keyboard_attachable_controller.dart';
 import 'package:keyboard_attachable/src/controller/keyboard_attachable_injector.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
@@ -9,9 +10,12 @@ import 'package:keyboard_visibility/keyboard_visibility.dart';
 /// This widget can be used to animate its child when the soft keyboard is shown
 /// or hidden, so that the child widget appears to be attached to the keyboard.
 ///
-/// If no child widget is passed to the [KeyboardAttachable], it can still be
+/// Even if no child widget is passed to [KeyboardAttachable], it can still be
 /// used to animate the shrinkage and expansion of the layout when the keyboard
-/// is shown an hidden, respectively.
+/// is shown an hidden, respectively. In order for this to work, this widget
+/// has to be attached to the bottom of the page, for example, by using a
+/// [FooterLayout], and the [Scaffold.resizeToAvoidBottomInset] parameter of
+/// the [Scaffold] above the page has to be set to false.
 class KeyboardAttachable extends StatefulWidget {
   /// Creates a widget that smoothly adds space below its child when the
   /// keyboard is shown or hidden.
