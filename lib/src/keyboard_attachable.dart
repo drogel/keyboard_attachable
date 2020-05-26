@@ -4,6 +4,11 @@ import 'package:keyboard_attachable/src/controller/keyboard_attachable_controlle
 import 'package:keyboard_attachable/src/controller/keyboard_attachable_injector.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
 
+typedef KeyboardTransitionBuilder = Widget Function(
+  Widget child,
+  Animation<double> animation,
+);
+
 /// A widget that adds space below its baseline when the soft keyboard is shown
 /// and hidden with an animation that matches that of the platform keyboard.
 ///
@@ -21,20 +26,30 @@ class KeyboardAttachable extends StatefulWidget {
   /// keyboard is shown or hidden.
   const KeyboardAttachable({
     this.child,
+    this.keyboardTransitionBuilder = KeyboardAttachable._defaultBuilder,
     this.backgroundColor = Colors.transparent,
     Key key,
-  }) : super(key: key);
+  })  : assert(keyboardTransitionBuilder != null),
+        super(key: key);
 
   /// The color that fills the space that is added when the keyboard appears.
   ///
   /// By default, this value is [Colors.transparent].
   final Color backgroundColor;
 
+  final KeyboardTransitionBuilder keyboardTransitionBuilder;
+
   /// The widget to be placed above the space that this widget can insert.
   final Widget child;
 
   @override
   _KeyboardAttachableState createState() => _KeyboardAttachableState();
+
+  static Widget _defaultBuilder(
+    Widget child,
+    Animation<double> animation,
+  ) =>
+      child;
 }
 
 class _KeyboardAttachableState extends State<KeyboardAttachable>
@@ -47,21 +62,23 @@ class _KeyboardAttachableState extends State<KeyboardAttachable>
     _bottomSize = 0;
     _controller = KeyboardAttachableInjector(this).getPlatformController();
     KeyboardVisibilityNotification().addNewListener(
-      onShow: () => _controller.forward(),
-      onHide: () => _controller.reverse(),
+      onShow: _controller.forward,
+      onHide: _controller.reverse,
     );
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final animation = _controller.animation;
+    final child = widget.child;
     _shouldUpdateBottomSize(context);
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        if (widget.child != null) widget.child,
+        if (child != null) widget.keyboardTransitionBuilder(child, animation),
         SizeTransition(
-          sizeFactor: _controller.animation,
+          sizeFactor: animation,
           child: Container(
             height: _bottomSize,
             color: widget.backgroundColor,
