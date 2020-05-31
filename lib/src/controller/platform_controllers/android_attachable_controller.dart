@@ -7,7 +7,7 @@ class AndroidAttachableController implements KeyboardAttachableController {
     _controller = AnimationController(
       vsync: vsync,
       duration: const Duration(milliseconds: 150),
-      reverseDuration: const Duration(milliseconds: 150),
+      reverseDuration: const Duration(milliseconds: 100),
     );
   }
 
