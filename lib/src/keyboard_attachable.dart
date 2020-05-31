@@ -4,9 +4,14 @@ import 'package:keyboard_attachable/src/controller/keyboard_attachable_controlle
 import 'package:keyboard_attachable/src/controller/keyboard_attachable_injector.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
 
+/// Signature for builders used in custom transitions for KeyboardAttachable.
+///
+/// The function should return a widget which wraps the given [child].
+/// It may also use the animation to inform its transition.
 typedef KeyboardTransitionBuilder = Widget Function(
   Widget child,
   Animation<double> animation,
+  double keyboardHeight,
 );
 
 /// A widget that adds space below its baseline when the soft keyboard is shown
@@ -26,10 +31,10 @@ class KeyboardAttachable extends StatefulWidget {
   /// keyboard is shown or hidden.
   const KeyboardAttachable({
     this.child,
-    this.keyboardTransitionBuilder = KeyboardAttachable._defaultBuilder,
+    this.transitionBuilder = KeyboardAttachable._defaultBuilder,
     this.backgroundColor = Colors.transparent,
     Key key,
-  })  : assert(keyboardTransitionBuilder != null),
+  })  : assert(transitionBuilder != null),
         super(key: key);
 
   /// The color that fills the space that is added when the keyboard appears.
@@ -37,7 +42,24 @@ class KeyboardAttachable extends StatefulWidget {
   /// By default, this value is [Colors.transparent].
   final Color backgroundColor;
 
-  final KeyboardTransitionBuilder keyboardTransitionBuilder;
+  /// A function that wraps a new child with an animation that makes the
+  /// keyboard appear when the animation runs in the forward direction and hide
+  /// when the animation runs in the reverse direction.
+  ///
+  /// This is only called when the keyboard changes its status from hidden to
+  /// shown (not for each build).
+  ///
+  /// The default is [KeyboardAttachable._defaultBuilder], which simply returns
+  /// the child that was passed to [KeyboardAttachable].
+  ///
+  /// The animation provided to the builder has the duration and curve applied
+  /// to make the keyboard animation match the corresponding platform animation.
+  ///
+  /// See also:
+  ///
+  /// * [KeyboardTransitionBuilder] for more information about how a transition
+  /// builder should function.
+  final KeyboardTransitionBuilder transitionBuilder;
 
   /// The widget to be placed above the space that this widget can insert.
   final Widget child;
@@ -48,6 +70,7 @@ class KeyboardAttachable extends StatefulWidget {
   static Widget _defaultBuilder(
     Widget child,
     Animation<double> animation,
+    double keyboardHeight,
   ) =>
       child;
 }
@@ -55,11 +78,11 @@ class KeyboardAttachable extends StatefulWidget {
 class _KeyboardAttachableState extends State<KeyboardAttachable>
     with SingleTickerProviderStateMixin {
   KeyboardAttachableController _controller;
-  double _bottomSize;
+  double _bottomInset;
 
   @override
   void initState() {
-    _bottomSize = 0;
+    _bottomInset = 0;
     _controller = KeyboardAttachableInjector(this).getPlatformController();
     KeyboardVisibilityNotification().addNewListener(
       onShow: _controller.forward,
@@ -76,11 +99,12 @@ class _KeyboardAttachableState extends State<KeyboardAttachable>
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        if (child != null) widget.keyboardTransitionBuilder(child, animation),
+        if (child != null)
+          widget.transitionBuilder(child, animation, _bottomInset),
         SizeTransition(
           sizeFactor: animation,
           child: Container(
-            height: _bottomSize,
+            height: _bottomInset,
             color: widget.backgroundColor,
           ),
         ),
@@ -95,9 +119,9 @@ class _KeyboardAttachableState extends State<KeyboardAttachable>
   }
 
   void _shouldUpdateBottomSize(BuildContext context) {
-    final bottomInsets = MediaQuery.of(context).viewInsets.bottom;
-    if (bottomInsets != 0) {
-      _bottomSize = bottomInsets;
+    final bottomInset = MediaQuery.of(context).viewInsets.bottom;
+    if (bottomInset != 0) {
+      _bottomInset = bottomInset;
     }
   }
 }
