@@ -34,12 +34,12 @@ class KeyboardAttachableFooter extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(16),
           color: Colors.blue,
-          child: TextField(
+          child: const TextField(
             decoration: InputDecoration(
               hintText: "Tap me!",
               fillColor: Colors.white,
               filled: true,
-              border: const OutlineInputBorder(),
+              border: OutlineInputBorder(),
             ),
           ),
         ),
