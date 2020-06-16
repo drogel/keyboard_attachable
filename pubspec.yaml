@@ -9,9 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  keyboard_visibility:
-    git :
-      url: https://github.com/Faiyyaz/flutter_keyboard_visibility.git
+  keyboard_visibility: ^0.5.6
 
 dev_dependencies:
   flutter_test:
