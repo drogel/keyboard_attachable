@@ -39,7 +39,7 @@ class KeyboardAttachable extends StatefulWidget {
 
   /// The color that fills the space that is added when the keyboard appears.
   ///
-  /// By default, this value is [Colors.transparent].
+  /// Defaults to [Colors.transparent].
   final Color backgroundColor;
 
   /// A function that wraps a new child with an animation that makes the
@@ -47,13 +47,15 @@ class KeyboardAttachable extends StatefulWidget {
   /// when the animation runs in the reverse direction.
   ///
   /// This is only called when the keyboard changes its status from hidden to
-  /// shown (not for each build).
+  /// shown.
   ///
-  /// The default is [KeyboardAttachable._defaultBuilder], which simply returns
+  /// Defaults to [KeyboardAttachable._defaultBuilder], which simply returns
   /// the child that was passed to [KeyboardAttachable].
   ///
-  /// The animation provided to the builder has the duration and curve applied
+  /// The animation provided to the builder has the duration and curve needed
   /// to make the keyboard animation match the corresponding platform animation.
+  /// The animation value will be 0 if the keyboard is dismissed, and 1 if the
+  /// keyboard is fully shown.
   ///
   /// See also:
   ///

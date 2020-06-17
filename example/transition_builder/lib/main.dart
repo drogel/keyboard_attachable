@@ -26,22 +26,58 @@ class KeyboardAttachablePage extends StatelessWidget {
       );
 }
 
-/// Builds a footer that animates its bottom space when the keyboard is shown.
+/// Builds a footer that animates its bottom space and the insertion of an icon
+/// button when the keyboard is shown.
 class KeyboardAttachableFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) => KeyboardAttachable(
         backgroundColor: Colors.blue,
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          color: Colors.blue,
+        transitionBuilder: _buildTransition,
+        child: const Padding(
+          padding: EdgeInsets.all(16),
           child: TextField(
             decoration: InputDecoration(
               hintText: "Tap me!",
               fillColor: Colors.white,
               filled: true,
-              border: const OutlineInputBorder(),
+              border: OutlineInputBorder(),
             ),
           ),
+        ),
+      );
+
+  Widget _buildTransition(
+    Widget child,
+    Animation<double> animation,
+    double keyboardHeight,
+  ) =>
+      Container(
+        color: Colors.blue,
+        child: Column(
+          children: <Widget>[
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Expanded(child: child),
+                SizeTransition(
+                  axis: Axis.horizontal,
+                  sizeFactor: animation,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 16),
+                    child: IconButton(
+                      icon: const Icon(Icons.send),
+                      color: Colors.white,
+                      onPressed: () {},
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizeTransition(
+              sizeFactor: Tween<double>(begin: 1, end: 0).animate(animation),
+              child: const SizedBox(height: 50),
+            ),
+          ],
         ),
       );
 }
