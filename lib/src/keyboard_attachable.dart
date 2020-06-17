@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:keyboard_attachable/keyboard_attachable.dart';
 import 'package:keyboard_attachable/src/controller/keyboard_attachable_controller.dart';
 import 'package:keyboard_attachable/src/controller/keyboard_attachable_injector.dart';
-import 'package:keyboard_visibility/keyboard_visibility.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
 /// Signature for builders used in custom transitions for KeyboardAttachable.
 ///
@@ -86,10 +86,11 @@ class _KeyboardAttachableState extends State<KeyboardAttachable>
   void initState() {
     _bottomInset = 0;
     _controller = KeyboardAttachableInjector(this).getPlatformController();
-    KeyboardVisibilityNotification().addNewListener(
-      onShow: _controller.forward,
-      onHide: _controller.reverse,
-    );
+
+    KeyboardVisibility.onChange.listen((visible) {
+      visible ? _controller.forward() : _controller.reverse();
+    });
+
     super.initState();
   }
 
