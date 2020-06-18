@@ -1,6 +1,6 @@
 import 'package:flutter/animation.dart';
 
-abstract class KeyboardAttachableController {
+abstract class KeyboardAnimationController {
   Animation<double> get animation;
 
   TickerFuture forward();

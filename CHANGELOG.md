@@ -1,3 +1,8 @@
+## [1.0.3] - May 2020
+
+* Moves keyboard visibility dependencies to `flutter_visibility_package`.
+* Refactors animation controllers and visibility stream subscription. Changes only affect internal components.
+
 ## [1.0.2] - May 2020
 
 * Adds an example app to the project that makes use of the `transitionBuilder` parameter.

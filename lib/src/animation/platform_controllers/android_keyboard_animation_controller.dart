@@ -1,9 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:keyboard_attachable/src/controller/keyboard_attachable_controller.dart';
+import 'package:keyboard_attachable/src/animation/keyboard_animation_controller.dart';
 
-class AndroidAttachableController implements KeyboardAttachableController {
-  AndroidAttachableController({@required TickerProvider vsync}) {
+class AndroidKeyboardAnimationController
+    implements KeyboardAnimationController {
+  AndroidKeyboardAnimationController({@required TickerProvider vsync}) {
     _controller = AnimationController(
       vsync: vsync,
       duration: const Duration(milliseconds: 150),

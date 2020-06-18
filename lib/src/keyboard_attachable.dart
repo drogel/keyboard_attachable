@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:keyboard_attachable/keyboard_attachable.dart';
-import 'package:keyboard_attachable/src/controller/keyboard_attachable_controller.dart';
-import 'package:keyboard_attachable/src/controller/keyboard_attachable_injector.dart';
+import 'package:keyboard_attachable/src/animation/keyboard_animation_controller.dart';
+import 'package:keyboard_attachable/src/animation/keyboard_animation_injector.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:keyboard_attachable/src/visibility/default_keyboard_visibility_controller.dart';
+import 'package:keyboard_attachable/src/visibility/keyboard_visibility_controller.dart';
 
 /// Signature for builders used in custom transitions for KeyboardAttachable.
 ///
@@ -79,18 +83,17 @@ class KeyboardAttachable extends StatefulWidget {
 
 class _KeyboardAttachableState extends State<KeyboardAttachable>
     with SingleTickerProviderStateMixin {
-  KeyboardAttachableController _controller;
+  KeyboardAnimationController _controller;
+  KeyboardVisibilityController _keyboardVisibility;
+  StreamSubscription<bool> _visibilitySubscription;
   double _bottomInset;
 
   @override
   void initState() {
     _bottomInset = 0;
-    _controller = KeyboardAttachableInjector(this).getPlatformController();
-
-    KeyboardVisibility.onChange.listen((visible) {
-      visible ? _controller.forward() : _controller.reverse();
-    });
-
+    _keyboardVisibility = const DefaultKeyboardVisibilityController();
+    _controller = KeyboardAnimationInjector(this).getPlatformController();
+    _visibilitySubscription = _keyboardVisibility.onChange.listen(_animate);
     super.initState();
   }
 
@@ -118,6 +121,7 @@ class _KeyboardAttachableState extends State<KeyboardAttachable>
   @override
   void dispose() {
     _controller.dispose();
+    _visibilitySubscription.cancel();
     super.dispose();
   }
 
@@ -127,4 +131,7 @@ class _KeyboardAttachableState extends State<KeyboardAttachable>
       _bottomInset = bottomInset;
     }
   }
+
+  void _animate(bool isKeyboardVisible) =>
+      isKeyboardVisible ? _controller.forward() : _controller.reverse();
 }
