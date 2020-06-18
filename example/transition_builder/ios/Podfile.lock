@@ -1,28 +1,21 @@
 PODS:
   - Flutter (1.0.0)
-  - keyboard_visibility (0.5.0):
+  - flutter_keyboard_visibility (0.0.1):
     - Flutter
-    - Reachability
-  - Reachability (3.2)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
-  - keyboard_visibility (from `.symlinks/plugins/keyboard_visibility/ios`)
-
-SPEC REPOS:
-  trunk:
-    - Reachability
+  - flutter_keyboard_visibility (from `.symlinks/plugins/flutter_keyboard_visibility/ios`)
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
-  keyboard_visibility:
-    :path: ".symlinks/plugins/keyboard_visibility/ios"
+  flutter_keyboard_visibility:
+    :path: ".symlinks/plugins/flutter_keyboard_visibility/ios"
 
 SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  keyboard_visibility: 96a24de806fe6823c3ad956c01ba2ec6d056616f
-  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  flutter_keyboard_visibility: 0339d06371254c3eb25eeb90ba8d17dca8f9c069
 
 PODFILE CHECKSUM: c34e2287a9ccaa606aeceab922830efb9a6ff69a
 
