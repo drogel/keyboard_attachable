@@ -9,23 +9,23 @@ import 'package:flutter/widgets.dart';
 class FooterLayout extends StatelessWidget {
   /// Creates a layout with its child widget above a footer widget.
   const FooterLayout({
-    Key key,
+    Key? key,
     this.footer,
     this.child,
   }) : super(key: key);
 
   /// The widget to position at the bottom of the available space.
-  final Widget footer;
+  final Widget? footer;
 
   /// The primary content of the [FooterLayout].
-  final Widget child;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) => CustomMultiChildLayout(
         delegate: _FooterLayoutDelegate(),
         children: <Widget>[
-          if (child != null) LayoutId(id: _Entries.body, child: child),
-          if (footer != null) LayoutId(id: _Entries.footer, child: footer)
+          if (child != null) LayoutId(id: _Entries.body, child: child!),
+          if (footer != null) LayoutId(id: _Entries.footer, child: footer!)
         ],
       );
 }
