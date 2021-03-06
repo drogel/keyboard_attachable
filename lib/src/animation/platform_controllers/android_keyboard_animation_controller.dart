@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:keyboard_attachable/src/animation/keyboard_animation_controller.dart';
 
@@ -21,9 +20,7 @@ class AndroidKeyboardAnimationController
       );
 
   @override
-  void dispose() {
-    _controller.dispose();
-  }
+  void dispose() => _controller.dispose();
 
   @override
   TickerFuture forward() => _controller.forward();
