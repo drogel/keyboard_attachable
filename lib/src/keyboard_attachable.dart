@@ -37,8 +37,7 @@ class KeyboardAttachable extends StatefulWidget {
     this.transitionBuilder = KeyboardAttachable._defaultBuilder,
     this.backgroundColor = Colors.transparent,
     Key? key,
-  })  : assert(transitionBuilder != null),
-        super(key: key);
+  }) : super(key: key);
 
   /// The color that fills the space that is added when the keyboard appears.
   ///
@@ -87,10 +86,15 @@ class _KeyboardAttachableState extends State<KeyboardAttachable>
 
   late final KeyboardAnimationController _controller =
       KeyboardAnimationInjector(this).getPlatformController();
-  late final StreamSubscription<bool> _visibilitySubscription =
-      _keyboardVisibility.onChange.listen(_animate);
+  late StreamSubscription<bool> _visibilitySubscription;
 
   double _bottomInset = 0;
+
+  @override
+  void initState() {
+    _visibilitySubscription = _keyboardVisibility.onChange.listen(_animate);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

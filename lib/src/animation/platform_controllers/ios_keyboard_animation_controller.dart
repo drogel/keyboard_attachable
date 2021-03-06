@@ -29,7 +29,5 @@ class IOSKeyboardAnimationController implements KeyboardAnimationController {
   }
 
   @override
-  void dispose() {
-    _controller.dispose();
-  }
+  void dispose() => _controller.dispose();
 }

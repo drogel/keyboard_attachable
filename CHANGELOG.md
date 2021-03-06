@@ -1,3 +1,8 @@
+## [2.0.0] - March 2021
+
+* Migrates package to dart null safety.
+* Moves example files to the `example` folder.
+
 ## [1.0.3] - May 2020
 
 * Moves keyboard visibility dependencies to `flutter_visibility_package`.
