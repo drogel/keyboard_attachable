@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:keyboard_attachable/keyboard_attachable.dart';
 import 'package:keyboard_attachable/src/animation/keyboard_animation_controller.dart';
 import 'package:keyboard_attachable/src/animation/keyboard_animation_injector.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:keyboard_attachable/src/visibility/default_keyboard_visibility_controller.dart';
 import 'package:keyboard_attachable/src/visibility/keyboard_visibility_controller.dart';
 
@@ -37,7 +36,7 @@ class KeyboardAttachable extends StatefulWidget {
     this.child,
     this.transitionBuilder = KeyboardAttachable._defaultBuilder,
     this.backgroundColor = Colors.transparent,
-    Key key,
+    Key? key,
   })  : assert(transitionBuilder != null),
         super(key: key);
 
@@ -68,7 +67,7 @@ class KeyboardAttachable extends StatefulWidget {
   final KeyboardTransitionBuilder transitionBuilder;
 
   /// The widget to be placed above the space that this widget can insert.
-  final Widget child;
+  final Widget? child;
 
   @override
   _KeyboardAttachableState createState() => _KeyboardAttachableState();
@@ -83,19 +82,15 @@ class KeyboardAttachable extends StatefulWidget {
 
 class _KeyboardAttachableState extends State<KeyboardAttachable>
     with SingleTickerProviderStateMixin {
-  KeyboardAnimationController _controller;
-  KeyboardVisibilityController _keyboardVisibility;
-  StreamSubscription<bool> _visibilitySubscription;
-  double _bottomInset;
+  final KeyboardVisibilityController _keyboardVisibility =
+      const DefaultKeyboardVisibilityController();
 
-  @override
-  void initState() {
-    _bottomInset = 0;
-    _keyboardVisibility = const DefaultKeyboardVisibilityController();
-    _controller = KeyboardAnimationInjector(this).getPlatformController();
-    _visibilitySubscription = _keyboardVisibility.onChange.listen(_animate);
-    super.initState();
-  }
+  late final KeyboardAnimationController _controller =
+      KeyboardAnimationInjector(this).getPlatformController();
+  late final StreamSubscription<bool> _visibilitySubscription =
+      _keyboardVisibility.onChange.listen(_animate);
+
+  double _bottomInset = 0;
 
   @override
   Widget build(BuildContext context) {

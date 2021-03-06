@@ -4,15 +4,14 @@ import 'package:keyboard_attachable/src/animation/keyboard_animation_controller.
 
 class AndroidKeyboardAnimationController
     implements KeyboardAnimationController {
-  AndroidKeyboardAnimationController({@required TickerProvider vsync}) {
-    _controller = AnimationController(
-      vsync: vsync,
-      duration: const Duration(milliseconds: 150),
-      reverseDuration: const Duration(milliseconds: 100),
-    );
-  }
+  AndroidKeyboardAnimationController({required TickerProvider vsync})
+      : _controller = AnimationController(
+          vsync: vsync,
+          duration: const Duration(milliseconds: 150),
+          reverseDuration: const Duration(milliseconds: 100),
+        );
 
-  AnimationController _controller;
+  final AnimationController _controller;
 
   @override
   Animation<double> get animation => CurvedAnimation(
@@ -24,7 +23,6 @@ class AndroidKeyboardAnimationController
   @override
   void dispose() {
     _controller.dispose();
-    _controller = null;
   }
 
   @override
