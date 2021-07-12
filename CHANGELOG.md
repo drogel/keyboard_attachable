@@ -1,3 +1,7 @@
+## [2.0.1] - July 2021
+
+* Fixes animations and offsets when there are widgets below the footer.
+
 ## [2.0.0] - March 2021
 
 * Migrates package to dart null safety.
