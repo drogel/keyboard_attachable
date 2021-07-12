@@ -1,6 +1,6 @@
 name: keyboard_attachable
 description: A Flutter package to build widgets that can be attached to the soft keyboard.
-version: 2.0.0
+version: 2.0.1
 homepage: https://github.com/drogel/keyboard_attachable
 
 environment:
