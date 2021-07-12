@@ -88,7 +88,9 @@ class _KeyboardAttachableState extends State<KeyboardAttachable>
       KeyboardAnimationInjector(this).getPlatformController();
   late StreamSubscription<bool> _visibilitySubscription;
 
+  final _keyboardAttachableKey = GlobalKey();
   double _bottomInset = 0;
+  double _animationBegin = 0;
 
   @override
   void initState() {
@@ -98,16 +100,21 @@ class _KeyboardAttachableState extends State<KeyboardAttachable>
 
   @override
   Widget build(BuildContext context) {
+    _updateBottomSizeIfNeeded(context);
     final animation = _controller.animation;
+    final offsetAnimation = CurvedAnimation(
+      parent: animation,
+      curve: Interval(_animationBegin, 1),
+    );
     final child = widget.child;
-    _shouldUpdateBottomSize(context);
     return Column(
+      key: _keyboardAttachableKey,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         if (child != null)
-          widget.transitionBuilder(child, animation, _bottomInset),
+          widget.transitionBuilder(child, offsetAnimation, _bottomInset),
         SizeTransition(
-          sizeFactor: animation,
+          sizeFactor: offsetAnimation,
           child: Container(
             height: _bottomInset,
             color: widget.backgroundColor,
@@ -124,13 +131,30 @@ class _KeyboardAttachableState extends State<KeyboardAttachable>
     super.dispose();
   }
 
-  void _shouldUpdateBottomSize(BuildContext context) {
-    final bottomInset = MediaQuery.of(context).viewInsets.bottom;
-    if (bottomInset != 0) {
+  void _updateBottomSizeIfNeeded(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final screenHeight = mediaQuery.size.height;
+    final keyboardAttachableBounds = _globalBounds(key: _keyboardAttachableKey);
+    final bottomOffset = screenHeight - keyboardAttachableBounds.bottom;
+    final keyboardHeight = mediaQuery.viewInsets.bottom;
+    final bottomInset = keyboardHeight - bottomOffset;
+    if (bottomInset > 0) {
       _bottomInset = bottomInset;
+      _animationBegin = 1 - bottomInset / keyboardHeight;
     }
   }
 
   void _animate(bool isKeyboardVisible) =>
       isKeyboardVisible ? _controller.forward() : _controller.reverse();
+
+  Rect _globalBounds({required GlobalKey key}) {
+    final renderObject = key.currentContext?.findRenderObject();
+    var translation = renderObject?.getTransformTo(null).getTranslation();
+    if (translation != null && renderObject != null) {
+      final offset = Offset(translation.x, translation.y);
+      return renderObject.paintBounds.shift(offset);
+    } else {
+      return Rect.zero;
+    }
+  }
 }
