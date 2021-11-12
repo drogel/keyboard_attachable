@@ -133,14 +133,17 @@ class _KeyboardAttachableState extends State<KeyboardAttachable>
 
   void _updateBottomSizeIfNeeded(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
+    final keyboardHeight = mediaQuery.viewInsets.bottom;
     final screenHeight = mediaQuery.size.height;
     final keyboardAttachableBounds = _globalBounds(key: _keyboardAttachableKey);
     final bottomOffset = screenHeight - keyboardAttachableBounds.bottom;
-    final keyboardHeight = mediaQuery.viewInsets.bottom;
-    final bottomInset = keyboardHeight - bottomOffset;
+    final bottomInset =
+        (keyboardHeight - bottomOffset).clamp(0, keyboardHeight).toDouble();
+    final isKeyboardDismissed = keyboardHeight == 0;
+    final animationBegin = (1 - bottomInset / keyboardHeight).toDouble();
     if (bottomInset > 0) {
       _bottomInset = bottomInset;
-      _animationBegin = 1 - bottomInset / keyboardHeight;
+      _animationBegin = isKeyboardDismissed ? 0 : animationBegin;
     }
   }
 

@@ -17,11 +17,15 @@ class Example extends StatelessWidget {
 class KeyboardAttachablePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
+        backgroundColor: Colors.blue,
         resizeToAvoidBottomInset: false,
         appBar: AppBar(title: const Text("Keyboard Attachable demo")),
-        body: FooterLayout(
-          footer: KeyboardAttachableFooter(),
-          child: ColorsList(),
+        body: SafeArea(
+          maintainBottomViewPadding: true,
+          child: FooterLayout(
+            footer: KeyboardAttachableFooter(),
+            child: ColorsList(),
+          ),
         ),
       );
 }
@@ -53,7 +57,7 @@ class ColorsList extends StatelessWidget {
         itemExtent: 66,
         itemCount: Colors.primaries.length,
         itemBuilder: (_, i) => Container(
-          color: Colors.primaries[i].withOpacity(0.2),
+          color: Colors.primaries[i].shade100,
         ),
       );
 }
