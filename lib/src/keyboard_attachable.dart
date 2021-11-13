@@ -29,6 +29,10 @@ typedef KeyboardTransitionBuilder = Widget Function(
 /// has to be attached to the bottom of the page, for example, by using a
 /// [FooterLayout], and the [Scaffold.resizeToAvoidBottomInset] parameter of
 /// the [Scaffold] above the page has to be set to false.
+///
+/// In addition to that, when there are [SafeArea]s involved the layout, it is
+/// recommended to set their [SafeArea.maintainBottomViewPadding] property to
+/// true in order for the animations to run smoothly.
 class KeyboardAttachable extends StatefulWidget {
   /// Creates a widget that smoothly adds space below its child when the
   /// keyboard is shown or hidden.
@@ -133,14 +137,17 @@ class _KeyboardAttachableState extends State<KeyboardAttachable>
 
   void _updateBottomSizeIfNeeded(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
+    final keyboardHeight = mediaQuery.viewInsets.bottom;
     final screenHeight = mediaQuery.size.height;
     final keyboardAttachableBounds = _globalBounds(key: _keyboardAttachableKey);
     final bottomOffset = screenHeight - keyboardAttachableBounds.bottom;
-    final keyboardHeight = mediaQuery.viewInsets.bottom;
-    final bottomInset = keyboardHeight - bottomOffset;
+    final bottomInset =
+        (keyboardHeight - bottomOffset).clamp(0, keyboardHeight).toDouble();
+    final isKeyboardDismissed = keyboardHeight == 0;
+    final animationBegin = (1 - bottomInset / keyboardHeight).toDouble();
     if (bottomInset > 0) {
       _bottomInset = bottomInset;
-      _animationBegin = 1 - bottomInset / keyboardHeight;
+      _animationBegin = isKeyboardDismissed ? 0 : animationBegin;
     }
   }
 

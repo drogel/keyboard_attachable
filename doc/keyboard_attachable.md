@@ -8,9 +8,16 @@ and hidden with an animation that matches that of the platform keyboard.
 This widget can be used to animate its child when the soft keyboard is shown
 or hidden, so that the child widget appears to be attached to the keyboard.
 
-If no child widget is passed to the `KeyboardAttachable`, it can still be
+Even if no child widget is passed to `KeyboardAttachable`, it can still be
 used to animate the shrinkage and expansion of the layout when the keyboard
-is shown an hidden, respectively.
+is shown an hidden, respectively. In order for this to work, this widget
+has to be attached to the bottom of the page, for example, by using a
+`FooterLayout`, and the `Scaffold.resizeToAvoidBottomInset` parameter of
+the `Scaffold` above the page has to be set to false.
+
+In addition to that, when there are `SafeArea`s involved the layout, it is
+recommended to set their `SafeArea.maintainBottomViewPadding` property to
+true in order for the animations to run smoothly.
 
 ### Constructor
 
