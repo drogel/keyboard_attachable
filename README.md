@@ -39,8 +39,29 @@ disappears, with an animation that matches the platform keyboard animation. Addi
 pass a child widget to your `KeyboardAttachable` to have a footer in your page that attaches itself 
 to the soft keyboard when shown.
 
-In order for this to work with animations, the `resizeToAvoidBottomInset` parameter of the 
-`Scaffold` above the page has to be `false`.
+> **Warning**: In order for this to work with animations, the `resizeToAvoidBottomInset` parameter
+of the `Scaffold` above the page has to be `false`. In addition to that, when there are `SafeArea`s
+involved the layout, it is recommended to set their `maintainBottomViewPadding` property to `true` in
+order for the animations to run smoothly, like so:
+
+```dart
+/// Builds a [Scaffold] that lays out a footer at the bottom of the page.
+class KeyboardAttachablePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) => Scaffold(
+        backgroundColor: Colors.blue,
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(title: const Text("Keyboard Attachable demo")),
+        body: SafeArea(
+          maintainBottomViewPadding: true,
+          child: FooterLayout(
+            footer: KeyboardAttachableFooter(),
+            child: ColorsList(),
+          ),
+        ),
+      );
+}
+```
 
 ## Getting started
 

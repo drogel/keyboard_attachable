@@ -29,6 +29,10 @@ typedef KeyboardTransitionBuilder = Widget Function(
 /// has to be attached to the bottom of the page, for example, by using a
 /// [FooterLayout], and the [Scaffold.resizeToAvoidBottomInset] parameter of
 /// the [Scaffold] above the page has to be set to false.
+///
+/// In addition to that, when there are [SafeArea]s involved the layout, it is
+/// recommended to set their [SafeArea.maintainBottomViewPadding] property to
+/// true in order for the animations to run smoothly.
 class KeyboardAttachable extends StatefulWidget {
   /// Creates a widget that smoothly adds space below its child when the
   /// keyboard is shown or hidden.
