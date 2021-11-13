@@ -1,3 +1,8 @@
+## [2.1.0] - November 2021
+
+* Fixes animation begin and end being out of bounds for certain kinds of layouts.
+* Enables usage of `KeyboardAttachable` widgets with `SafeArea` widgets.
+
 ## [2.0.1] - July 2021
 
 * Fixes animations and offsets when there are widgets below the footer.
