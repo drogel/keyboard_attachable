@@ -51,5 +51,6 @@ class _FooterLayoutDelegate extends MultiChildLayoutDelegate {
   }
 
   @override
-  bool shouldRelayout(MultiChildLayoutDelegate oldDelegate) => false;
+  bool shouldRelayout(MultiChildLayoutDelegate oldDelegate) =>
+      oldDelegate != this;
 }
