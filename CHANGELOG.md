@@ -1,3 +1,8 @@
+## [2.2.0] - October 2023
+
+* Upgrades Gradle and Manifest Updates for improved compatibility.
+* Upgrades `flutter_keyboard_visibility` dependency to version 5.4.1.
+
 ## [2.1.0] - November 2021
 
 * Fixes animation begin and end being out of bounds for certain kinds of layouts.
