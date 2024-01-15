@@ -95,6 +95,7 @@ class _KeyboardAttachableState extends State<KeyboardAttachable>
   final _keyboardAttachableKey = GlobalKey();
   double _bottomInset = 0;
   double _animationBegin = 0;
+  bool _isKeyboardVisible = false;
 
   @override
   void initState() {
@@ -143,16 +144,21 @@ class _KeyboardAttachableState extends State<KeyboardAttachable>
     final bottomOffset = screenHeight - keyboardAttachableBounds.bottom;
     final bottomInset =
         (keyboardHeight - bottomOffset).clamp(0, keyboardHeight).toDouble();
+    final ratio = bottomInset / _bottomInset;
     final isKeyboardDismissed = keyboardHeight == 0;
     final animationBegin = (1 - bottomInset / keyboardHeight).toDouble();
-    if (bottomInset > 0) {
+    if (bottomInset > 0 &&
+        ((_isKeyboardVisible && ratio > 1) ||
+            (!_isKeyboardVisible && ratio < 1))) {
       _bottomInset = bottomInset;
       _animationBegin = isKeyboardDismissed ? 0 : animationBegin;
     }
   }
 
-  void _animate(bool isKeyboardVisible) =>
-      isKeyboardVisible ? _controller.forward() : _controller.reverse();
+  void _animate(bool isKeyboardVisible) {
+    _isKeyboardVisible = isKeyboardVisible;
+    isKeyboardVisible ? _controller.forward() : _controller.reverse();
+  }
 
   Rect _globalBounds({required GlobalKey key}) {
     final renderObject = key.currentContext?.findRenderObject();
